@@ -1,0 +1,56 @@
+# Course 1 - The Data Scientist’s Toolbox:
+## Quiz 1:
+### Question 1
+
+Which of the following are courses in the Data Science Specialization? Select all that apply:
+
+**Answers:**
+
+- Business Analytics [_];
+- Python Programming [_];
+- Developing Data Products (previously known as Building Data Products) [v];
+- R programming [v].
+
+### Question 2
+
+Why are we using R for the course track? Select all that apply.
+
+**Answers:**
+
+- R has a nice IDE, Rstudio. [v];
+- Packages are easy to install and "play nicely" together [v];
+- R allows object oriented programming [_];
+- R is the best cloud computing language [_].
+
+### Question 3:
+
+What are good ways to find answers to questions in this course track? Select all that apply.
+
+**Answers:**
+
+- Looking through R help files [v];
+- Expecting every answer to be in a lecture slide [_];
+- Asking a skilled friend [v];
+- Posting homework assignments to mailing lists [_].
+
+### Question 4:
+
+What are characteristics of good questions on the message boards? Select all that apply.
+
+**Answers:**
+
+- Is an exact homework question [_];
+- Is polite and courteous [v];
+- Explicitly lists versions of software being used [v];
+- Provides no details [_].
+
+### Question 5
+
+Which of the following packages provides machine learning functionality? Select all that apply
+
+**Answers:**
+
+- knitr[_];
+- cacheSweave [_];
+- gbm [v];
+- pamr[v].
