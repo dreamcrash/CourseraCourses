@@ -1,0 +1,132 @@
+##Quiz 4
+### Question 1
+What is produced at the end of this snippet of R code?
+
+> set.seed(1)
+- rpois(5, 2)
+
+** Possible Answers:**
+
+- A vector with the numbers 3.3, 2.5, 0.5, 1.1, 1.7        ["Wrong"]
+- A vector with the numbers 1, 1, 2, 4, 1                  ["Correct"]
+- A vector with the numbers 1, 4, 1, 1, 5                  ["Wrong"]
+- It is impossible to tell because the result is random    ["Wrong"]
+
+**Explanation:**
+
+- Because the `set.seed()' function is used, `rpois()' will always output the same vector in this code.
+
+### Question 2
+What R function can be used to generate standard Normal random variables?
+
+**Possible Answers:**
+
+- rnorm ["Correct"]
+- qnorm ["Wrong"]
+- dnorm ["Wrong"]
+- pnorm ["Wrong"]
+
+**Explanation:**
+
+- Functions beginning with the `r' prefix are used to simulate random variates.
+- Standard probability distributions in R have a set of four functions that can be used to simulate variates, evaluate the density, evaluate the cumulative density, and evaluate the quantile function.
+
+### Question 3
+When simulating data, why is using the set.seed() function important?
+
+**Possible Answers:**
+
+- It ensures that the sequence of random numbers is truly random. ["Wrong"]
+- It can be used to generate non-uniform random numbers.          ["Wrong"]
+- It ensures that the sequence of random numbers starts in a specific place and is therefore reproducible. ["Correct"]
+- It ensures that the random numbers generated are within specified boundaries. ["Wrong"]
+
+### Question 4
+Which function can be used to evaluate the inverse cumulative distribution function for the Poisson distribution?
+
+**Possible Answers:**
+
+- dpois ["Wrong"]
+- ppois ["Wrong"]
+- rpois ["Wrong"]
+- qpois ["Correct"]
+
+**Explanation:**
+
+- Probability distribution functions beginning with the `q' prefix are used to evaluate the quantile (inverse cumulative distribution) function.
+
+### Question 5
+What does the following code do?
+
+- set.seed(10)
+- x <- rbinom(10, 10, 0.5)
+- e <- rnorm(10, 0, 20)
+- y <- 0.5 + 2 * x + e
+
+**Possible Answers:**
+- Generate data from a Poisson generalized linear model         ["Wrong"]
+- Generate data from a Normal linear model                      ["Correct"]
+- Generate random exponentially distributed data                ["Wrong"]
+- Generate uniformly distributed random data                    ["Wrong"]
+
+### Question 6
+What R function can be used to generate Binomial random variables?
+
+**Possible Answers:**
+
+- dbinom        ["Wrong"]
+- rbinom        ["Correct"]
+- qbinom        ["Wrong"]
+- pbinom        ["Wrong"]
+
+### Question 7
+What aspect of the R runtime does the profiler keep track of when an R expression is evaluated?
+
+**Possible Answers:**
+
+- the function call stack       ["Correct"]
+- the package search list       ["Wrong"]
+- the working directory         ["Wrong"]
+- the global environment        ["Wrong"]
+
+### Question 8
+
+Consider the following R code
+
+- library(datasets)
+- Rprof()
+- fit <- lm(y ~ x1 + x2)
+- Rprof(NULL)
+
+(Assume that y, x1, and x2 are present in the workspace.) Without running the code, what percentage of the run time is spent in the 'lm' function, based on the 'by.total' method of normalization shown in 'summaryRprof()'?
+
+**Possible Answers:**
+
+- 50%                           ["Wrong"]
+- 100%                          ["Correct"]
+- 23%                           ["Wrong"]
+- It is not possible to tell    ["Wrong"]
+
+**Explanation**
+- When using `by.total' normalization, the top-level function (in this case, `lm()') always takes 100% of the time.
+
+### Question 9
+
+When using 'system.time()', what is the user time?
+
+**Possible Answers:**
+
+- It is the time spent by the CPU evaluating an expression              ["Correct"]
+- It is the time spent by the CPU waiting for other tasks to finish     ["Wrong"]
+- It is a measure of network latency                                    ["Wrong"]
+- It is the "wall-clock" time it takes to evaluate an expression        ["Wrong"]
+
+### Question 10
+If a computer has more than one available processor and R is able to take advantage of that, then which of the following is true when using 'system.time()'?
+
+**Possible Answers:**
+
+- elapsed time is 0                                     ["Wrong"]
+- elapsed time may be smaller than user time            ["Correct"]
+- user time is always smaller than elapsed time         ["Wrong"]
+- user time is 0                                        ["Wrong"]
