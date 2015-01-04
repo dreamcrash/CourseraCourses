@@ -1,0 +1,95 @@
+# Quiz 1
+
+## Question 1
+
+Suppose I conduct a study and publish my findings. Which of the following is an example of a replication of my study?
+
+- I give my data to an independent investigator at another institution, she analyzes the data and gets the same results as I originally obtained.   [x]
+- I take my own data, analyze it again, and publish new findings.       [x]
+- An investigator at another institution conducts a study addressing a different scientific question and publishes her findings.               [x]
+- An investigator at another institution conducts a study addressing the same question, collects her own data, analyzes it separately from me, and publishes her own findings.                                             [v]
+
+## Question 2
+
+Which of the following is a requirement for a published data analysis to be reproducible?
+
+- The full computer code for doing the data analysis is made publicly available.                                                              [v]
+- The data analysis is conducted using R.                               [x]
+- The analysis is conducted on a variant of the Unix operating system.  [x]
+- The investigator makes available his computer, on which the analysis was originally conducted.                                                   [x]
+
+## Question 3
+
+Which of the following is an example of a reproducible study?
+
+- The study's analytic data and computer code for the data analysis are publicly available. When the code is run on the analytic data, the findings are identical to the published results.                                 [v]
+- The study's original authors re-run their computer code on their analytic data and confirm publicly that the findings match those of the published results.                                                                [x]
+- The study's analytic data are publicly available, but the computer code is not.                                                                 [x]
+- The study's analytic data and computer code are not publicly available, but the study was simple enough to be repeated by an independent investigator.                                                                     [x]
+
+## Question 4
+
+Which of the following is a reason that a study might NOT be fully replicated?
+
+- The original study was very expensive and there is no money to repeat it in a different setting.                                                 [v]
+- The original study was published in a high impact journal and is considered authoritative.                                               [x]
+- The original investigator does not want to make the analytic data available.                                                              [x]
+- The original study was conducted by a well-known investigator.        [x]
+
+## Question 5
+
+Which of the following is a reason why publishing reproducible research is increasingly important?
+
+- The statistical methods for most studies can be accurately described using plain language.                                                   [x]
+- New technologies are increasing the rate of data collection, creating datasets that are more complex and extremely high dimensional.          [v]
+- Computing power is limited today, making it difficult to apply sophisticated statistical methods.                                                [x]
+- Most studies today are small-scale and easily replicated.             [x]
+
+## Question 6
+
+What is the role of processing code in the research pipeline?
+
+- It transforms the computational results into figures and tables.      [x]
+- It transforms the analytic data into computational results.           [x]
+- It transforms the measured data into analytic data.                   [v]
+- It conducts the statistical analysis of the primary outcome.          [x]
+
+## Question 7
+
+Which is a goal of literate statistical programming?
+
+- Require that data analysis summaries are always written in LaTeX.     [x]
+- Ensure that data analysis documents are always exported in PDF format.[x]
+- Combine explanatory text and data analysis code in a single document. [v]
+- Separate figures and tables from other data analytic summaries.       [x]
+
+## Question 8
+
+What does it mean to weave a literate statistical program?
+
+- Transform the literate program into a machine readable code file.     [x]
+- Compress the literate program so that it takes up less space.         [x]
+- Transform the literate program into a human readable document.        [v]
+- Transform a literate program from R to python.                        [x]
+
+## Question 9
+
+Which of the following is required to implement a literate programming system?
+
+- A cloud-based computing service for running computations              [x]
+- A Unix-based computer system.                                         [x]
+- A documentation language like LaTeX.                                  [v]
+- A web server for publishing documents.                                [x]
+
+## Question 10
+
+What is one way in which the knitr system differs from Sweave?
+
+- knitr allows for the use of markdown instead of LaTeX.                [v]
+- knitr is written in python instead of R.                              [x]
+- knitr was developed by Friedrich Leisch.                              [x]
+- knitr lacks features like caching of code chunks.                     [x]
+
+
+
+

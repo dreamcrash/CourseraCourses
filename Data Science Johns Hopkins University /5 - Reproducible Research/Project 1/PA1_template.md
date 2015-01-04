@@ -1,0 +1,325 @@
+Assigment 1 : Reproducible Research
+=========================================================
+# Data Information
+The data for this assignment can be downloaded from the course web site:
+
+Dataset: [Activity monitoring data](https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip)
+
+The variables included in this dataset are:
+
+* steps: Number of steps taking in a 5-minute interval (missing values are coded as NA)
+
+* date: The date on which the measurement was taken in YYYY-MM-DD format
+
+* interval: Identifier for the 5-minute interval in which measurement was taken
+
+The dataset is stored in a comma-separated-value (CSV) file and there are a total of 17,568 observations in this dataset.
+
+## Loading and preprocessing the data 
+### Download and loading the data
+
+```r
+loadData <- function()
+{
+        URL <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip"
+        destfile <- "dataset.zip"
+        fileName <- "activity.csv"
+        
+        if (!file.exists(destfile))  # Check if the file already exists
+        {
+                download.file(URL, destfile,"curl")             # Download data
+                file <- unzip(destfile)                         # Unzip the file
+        }
+
+        data <- read.csv(file=fileName,head=TRUE,sep=",")
+}
+data <- loadData()
+```
+
+### Transforming the interval layout
+
+* I decided to change the interval layout to be represented in minutes. Thus, instead of having intervals like 100 (which meant 1 hour), we have 60 (60 minutes) which means 1 hour.
+
+
+```r
+changeInterval <- function(data)
+{
+        size <- nrow(data)
+        # 1440 is the number of minutes within an hour
+        # Since the sequence starts with 0 it have to end on 1440 - 5.
+        newIntervals <- seq(0,1435,5)
+        newIntervalsSize <- length(newIntervals)
+        j <- 1
+        
+        for(i in 1:size)
+        {
+                if (j > newIntervalsSize) # reset the iterator
+                        j <- 1        
+                
+                data$interval[i] = newIntervals[j]
+                j <- j + 1
+        }
+        data        
+}
+
+data <- changeInterval(data)
+```
+
+## What is mean total number of steps taken per day?
+#### 1) Make a histogram of the total number of steps taken each day
+
+* It was created a new subset of the original data. This subset is the result
+  of aggregating the total of steps by day.
+        
+
+```r
+aggData <- aggregate(steps ~ date, data = data, FUN = sum)
+```
+
+* Drawing the histogram of the total number of steps taken each day
+
+
+```r
+hist(aggData$step, xlab = "Total of Steps", main = "Total of steps per day")
+```
+
+![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png) 
+
+#### 2) Calculate and report the mean and median total number of steps taken per day
+
+* Calculating the mean:
+
+```r
+mean(aggData$step)
+```
+
+```
+## [1] 10766.19
+```
+
+* Calculating the median:
+
+```r
+median(aggData$step)
+```
+
+```
+## [1] 10765
+```
+
+## What is the average daily activity pattern?
+#### 1) Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
+
+* It was created a new subset of the original data (aggData2). This subset is the result
+  of aggregating the average of steps by interval across all days.
+  
+
+```r
+aggData2 <- aggregate(steps ~ interval, data = data, FUN = mean, na.rm = TRUE)
+```
+
+* Drawing the time series plot of 5-minute interval and the average number of steps taken, averaged across all days.
+
+
+```r
+plot(aggData2$steps ~ aggData2$interval,type = "l", xlab ="Time (5-minute intervals)", ylab="Average of steps taken across all days", main="Average of steps taken for each interval across all days")
+```
+
+![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png) 
+
+
+#### 2) Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
+
+
+```r
+aggData2$interval[which.max(aggData2$steps)]
+```
+
+```
+## [1] 515
+```
+
+## Imputing missing values
+* Note that there are a number of days/intervals where there are missing values (coded as NA). The presence of missing days may introduce bias into some calculations or summaries of the data.
+
+#### 1) Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)
+
+* Basically we take the vector of booleans corresponding to the positions of missing values and sum all its elements. 
+
+
+```r
+sum(is.na(data))
+```
+
+```
+## [1] 2304
+```
+
+#### 2) Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
+
+* My strategy is to fill up all the missing values with the mean for that 5-minute interval.
+
+
+```r
+fillingNA <- function(data, naSub)
+{
+        size <- nrow(data)
+        
+        for(i in 1:size)
+        {
+                if(is.na(data$steps[i]))
+                {
+                        # Replacing the NA for the 5-minute interval mean
+                        data$steps[i] = naSub$steps[naSub$interval == data$interval[i]]
+                }
+        }
+        data
+}
+```
+
+#### 3) Create a new dataset that is equal to the original dataset but with the missing data filled in.
+
+
+```r
+newDataSet <- fillingNA(data,aggData2)
+```
+
+* Number of missing values on the new data set.
+
+
+```r
+sum(is.na(newDataSet))
+```
+
+```
+## [1] 0
+```
+
+#### 4.1) Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day.
+
+* It was created a new subset of the data without missing values. This subset is the result of aggregating the total of steps by day.
+
+
+```r
+newDataSetaggData <- aggregate(steps ~ date, data = newDataSet, FUN = sum)
+```
+
+* Drawing the histogram of the total number of steps:
+
+
+```r
+hist(newDataSetaggData$step, xlab = "Total of Steps", main = "Total of steps per day")
+```
+
+![plot of chunk unnamed-chunk-15](figure/unnamed-chunk-15-1.png) 
+
+* Calculating the mean total number of steps taken per day of the data without missing values
+
+
+```r
+mean(newDataSetaggData$step)
+```
+
+```
+## [1] 10766.19
+```
+
+* Calculating the median total number of steps taken per day of the data without missing values
+
+```r
+median(newDataSetaggData$step)
+```
+
+```
+## [1] 10766.19
+```
+
+#### 4.2)  Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
+
+* In the first part of the assignment we obtained 10766.19 and 10765 for the mean and median, respectively. Whereas, in this part of the assigment we obtained 10766.19 and 10766.19 for the mean and the median, respectively. Thus, we can conclude that in this case the differences are irrelevant. This behavior happens because 1) the aggregate function ignores the missing values by default and 2) because we replace the missing values with the mean for that given interval.
+
+We can verify minor differences on the histograms made on the first and second part. Those differences are refleted on the frequency (y-axis) of each histogram, since the data with the replaced missing values has 61 days whereas the data with the missing values has 53. Thus, there was 8 days on the original data (61 - 53) that only presented missing values.
+
+* The days with only missing values on the original data:
+
+
+```r
+testData <- data  # Making a copy of the original data
+testData[is.na(testData)] <- 0 # Replace NA for zeros
+x <- aggregate(steps ~ date, data = testData, FUN = sum) # Agg by data
+x[x$step == 0,]    # Days with zero number of steps
+```
+
+```
+##          date steps
+## 1  2012-10-01     0
+## 8  2012-10-08     0
+## 32 2012-11-01     0
+## 35 2012-11-04     0
+## 40 2012-11-09     0
+## 41 2012-11-10     0
+## 45 2012-11-14     0
+## 61 2012-11-30     0
+```
+
+
+## Are there differences in activity patterns between weekdays and weekends?
+
+* For this part the weekdays() function may be of some help here. Use the dataset with the filled-in missing values for this part.
+
+#### 1) Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.
+
+
+```r
+transfWeekDays <- function(oldData)
+{
+        oldData$weekDays <- weekdays(as.Date(oldData$date))
+        size <- nrow(oldData)
+        
+        for(i in 1:size)
+        {
+                if(oldData$weekDays[i] == "Saturday" | oldData$weekDays[i] == "Sunday")
+                {
+                        oldData$weekDays[i] <- "weekend"
+                }
+                else
+                {
+                        oldData$weekDays[i] <- "weekday"
+                }
+        }
+        oldData              
+}
+
+newDataSet <- transfWeekDays(newDataSet)
+```
+
+#### 2) Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). 
+
+* It was created a new subset of the data without missing values. This subset is the result of aggregating the total of steps by interval and weekday.
+
+
+```r
+aggData3 <- aggregate(steps ~ interval + weekDays, data = newDataSet, FUN = mean, na.rm = TRUE)
+```
+
+* Drawing a panel plot containing a time series plot  of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis):
+
+* Loading the necessary libraries:
+
+
+```r
+library(lattice)
+```
+
+* Drawing the panel plot
+
+
+```r
+xyplot(steps ~ interval | weekDays, data = aggData3, layout=c(1,2), type ="l", main ="Average number of steps taken across all days")
+```
+
+![plot of chunk unnamed-chunk-22](figure/unnamed-chunk-22-1.png) 
+
+
+
+
