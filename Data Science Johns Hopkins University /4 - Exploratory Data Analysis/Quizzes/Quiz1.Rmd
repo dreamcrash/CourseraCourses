@@ -1,0 +1,101 @@
+# Quiz 1 
+
+## Question 1
+
+Which of the following is a principle of analytic graphics?
+
+- Integrate multiple modes of evidence                  [v]
+- Make judicious use of color in your scatterplots      [x]
+- Only do what your tools allow you to do               [x]
+- Show box plots (univariate summaries)                 [x]
+- Don't plot more than two variables at at time         [x]
+
+## Question 2
+
+What is the role of exploratory graphs in data analysis?
+
+- Only a few are constructed.                   [x]
+- The goal is for personal understanding.       [v]
+- They are made for formal presentations.       [x]
+- They are used in place of formal modeling.    [x]
+
+## Question 3
+
+Which of the following is true about the base plotting system?
+
+- Plots are typically created with a single function call.      [x]
+- Margins and spacings are adjusted automatically depending on the type of plot and the data.      [x]
+- Plots are created and annotated with separate functions.      [v]
+- The system is most useful for conditioning plots              [x]
+
+Explanation:
+
+- Functions like 'plot' or 'hist' typically create the plot on the graphics device and functions like 'lines', 'text', or 'points' will annotate or add data to the plot.
+
+## Question 4
+
+Which of the following is an example of a valid graphics device in R?
+
+- A file folder                 [x]
+- The keyboard                  [x]
+- A PNG file                    [v]
+- A socket connection           [x]
+
+## Question 5
+
+Which of the following is an example of a vector graphics device in R?
+
+- PNG                   [x]
+- TIFF                  [x]
+- GIF                   [x]
+- Postscript            [v]
+
+## Question 6
+
+Bitmapped file formats can be most useful for
+
+- Plots that require animation or interactivity         [x]
+- Plots that may need to be resized                     [x]
+- Scatterplots with many many points                    [v]
+- Plots that are not scaled to a specific resolution    [x]
+
+## Question 7
+
+Which of the following functions is typically used to add elements to a plot in the base graphics system?
+
+- hist()        [x]
+- boxplot()     [x]
+- plot()        [x]
+- text()        [v]
+
+## Question 8
+
+Which function opens the screen graphics device for the Mac?
+
+- pdf()         [x]
+- bitmap()      [x]
+- quartz()      [v]      
+- png()         [x]
+
+## Question 9
+
+What does the 'pch' option to par() control?
+
+- the plotting symbol/character in the base graphics system     [v]
+- the size of the plotting symbol in a scatterplot              [x]
+- the orientation of the axis labels on the plot                [x]
+- the line width in the base graphics system                    [x]
+
+## Question 10
+
+If I want to save a plot to a PDF file, which of the following is a correct way of doing that?
+
+- Open the screen device with quartz(), construct the plot, and then close the device with dev.off().              [x]
+- Open the PostScript device with postscript(), construct the plot, then close the device with dev.off().        [x]
+- Construct the plot on the screen device and then copy it to a PDF file with dev.copy2pdf()                     [v]
+- Construct the plot on the PNG device with png(), then copy it to a PDF with dev.copy2pdf().                    [x]
+
+
+
+
+
