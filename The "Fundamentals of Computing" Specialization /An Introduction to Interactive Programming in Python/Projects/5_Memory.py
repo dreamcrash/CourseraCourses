@@ -1,38 +1,125 @@
-{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf360
-{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
-{\colortbl;\red255\green255\blue255;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww9000\viewh8400\viewkind0
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
-{\field{\*\fldinst{HYPERLINK "http://www.codeskulptor.org/#user14_W6fCw96kkq_3.py"}}{\fldrslt 
-\f0\fs24 \cf0 http://www.codeskulptor.org/#user14_W6fCw96kkq_3.py}}
-\f0\fs24 \
-\
-\
-# CodeSkulptor runs Python programs in your browser.\
-# Click the upper left button to run this simple demo.\
-\
-# CodeSkulptor runs in Chrome 18+, Firefox 11+, and Safari 6+.\
-# Some features may work in other browsers, but do not expect\
-# full functionality.  It does NOT run in Internet Explorer.\
-\
-import simplegui\
-\
-message = "Welcome!"\
-\
-# Handler for mouse click\
-def click():\
-    global message\
-    message = "Good job!"\
-\
-# Handler to draw on canvas\
-def draw(canvas):\
-    canvas.draw_text(message, [50,112], 48, "Red")\
-\
-# Create a frame and assign callbacks to event handlers\
-frame = simplegui.create_frame("Home", 300, 200)\
-frame.add_button("Click me", click)\
-frame.set_draw_handler(draw)\
-\
-# Start the frame animation\
-frame.start()\
-}
+#link for the project => http://www.codeskulptor.org/#user14_W6fCw96kkq_3.py
+
+# implementation of card game - Memory
+
+import simplegui
+import random
+
+card_deck = []
+exposed = []
+SIZE = 8
+WIDHT = 800
+HEIGH = 100
+CARD_WIDTH = 50
+CARD_HEIGH = 100
+state = 0
+last_card = 0
+snd_last_card = 0
+move = 0
+status = 0
+
+def create_deck(size):
+    list = []
+    for n in range(size):
+        list.append(n)
+        list.append(n)
+        
+    return list
+
+# helper function to initialize globals
+def init():
+    global card_deck, exposed, move,state,last_card,snd_last_card 
+    card_deck = create_deck(SIZE)
+    random.shuffle(card_deck)
+    exposed = [False for deck in card_deck]
+    state = 0
+    last_card = 0
+    snd_last_card = 0
+    move = 0
+    status = 0
+
+def is_in_range(pos):
+    return pos[1] > 0 and pos[1] < HEIGH and pos[0] > 0 and pos[0] < WIDHT
+
+def check_cards_state(x):
+    global state,last_card,snd_last_card
+    if state == 0:
+       state = 1
+       snd_last_card = x  
+        
+    elif state == 1:
+          state = 2
+          last_card = x
+    else:
+         
+         if card_deck[snd_last_card] != card_deck[last_card]:
+             exposed[snd_last_card] = False
+             exposed[last_card] = False
+         snd_last_card = x
+         state = 1
+    
+
+# define event handlers
+def mouseclick(pos):
+    # add game state logic here
+    global exposed,move, status
+    
+    x = pos[0] // CARD_WIDTH
+    
+    if is_in_range(pos) and not exposed[x]:
+       exposed[x] = True
+       check_cards_state(x)
+       if status == 0:
+          move = move + 1
+          status = 1
+       else:
+          status = 0
+          
+       
+       
+    
+    
+                        
+# cards are logically 50x100 pixels in size    
+def draw(canvas):
+    card_width = 50
+    card_heigh = 100
+    half_width = card_width // 2
+    letter_size = 60
+    adjust = (card_width - (letter_size // 2)) // 2
+    x = 0
+    y = (card_heigh + letter_size) // 2 - letter_size // 5
+    pos = 0
+    
+    for card in card_deck:
+        if  exposed[pos]:
+            canvas.draw_text(str(card), (x + adjust, y), letter_size, "white")
+        else:
+            canvas.draw_line((x+half_width, 0), (x+half_width, card_heigh), card_width, "Green")
+        pos = pos + 1
+        x = x + card_width
+        canvas.draw_line((x,0),(x,card_heigh),2,"red")
+        
+    label.set_text("Moves = "+str(move))
+        
+
+# create frame and add a button and labels
+frame = simplegui.create_frame("Memory", WIDHT, HEIGH)
+frame.add_button("Restart", init)
+label = frame.add_label("Moves = 0")
+
+# initialize global variables
+init()
+
+# register event handlers
+frame.set_mouseclick_handler(mouseclick)
+frame.set_draw_handler(draw)
+
+
+# get things rolling
+frame.start()
+print str(move)
+label.set_text("Moves = "+str(move))
+
+
+# Always remember to review the grading rubric
